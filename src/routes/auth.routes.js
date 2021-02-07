@@ -1,13 +1,9 @@
 import { Router } from "express";
-import clientFunctions from '../controllers/client.controller';
+import authFunctions from '../controllers/auth.controller';
 
 const router = Router();
 
-// GET
-router.get('/', clientFunctions.getClients);
-
-// POST
-router.post('/newCliente', clientFunctions.insertCliente);
+router.post('/login', authFunctions.login);
 
 router.all('*', (req,res)=> {
     res.status(404).json({

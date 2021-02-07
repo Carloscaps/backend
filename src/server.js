@@ -1,7 +1,9 @@
 import express from 'express';
 import MethodOverride from 'method-override';
 import BodyParser from 'body-parser';
+import cors from "cors";
 import clientRoutes from './routes/client.routes';
+import authRoutes from './routes/auth.routes';
 
 const app = express();
 
@@ -10,10 +12,13 @@ app.set('PORT', process.env.PORT || 4000);
 
 // middleware configuration
 app.use(MethodOverride());
+app.use(cors());
 app.use(BodyParser.urlencoded({ extended: false }));
 
 // routes
-app.use('/api/clients',clientRoutes);
+app.use('/api/clients', clientRoutes);
+app.use('/api/auth', authRoutes);
+
 app.get('/', (req, res) => {
     res.send('Backend Wilug');
 });
