@@ -11,6 +11,7 @@ clientFunction.getClients = async(req, res) => {
         let clientes = await pool.request().query('select * from cliente');
         return res.status(200).json(clientes);
     } catch (error) {
+        console.log(error)
         return res.status(500).json({
             message: 'Error en el servidor', 
             error

@@ -4,7 +4,9 @@ export const config = {
     server: 'localhost',
     database: 'Wilug',
     options: {
+        trustedconnection: true,
         enableArithAbort: true,
-        encrypt: true
+        instancename: 'SQLEXPRESS'
     },
-};
+    port: 51688
+};  
