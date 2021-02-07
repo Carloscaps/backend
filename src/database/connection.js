@@ -2,7 +2,7 @@ export const config = {
     user: 'sa',
     password: 'sqlserver2014',
     server: 'localhost',
-    database: 'db_Wilug',
+    database: 'Wilug',
     options: {
         trustedconnection: true,
         enableArithAbort: true,
