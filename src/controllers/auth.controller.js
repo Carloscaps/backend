@@ -2,6 +2,7 @@ import sql from 'mssql';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import { config } from '../database/connection';
+import { secret } from '../config.json';
 
 let authFunctions = {};
 
@@ -9,7 +10,7 @@ const signToken = (email) => {
     return jwt.sign({
         email,
     },
-        config['secret-token'], {
+        secret, {
         expiresIn: 60 * 60 * 24, // 24 hrs
     }
     );
@@ -17,7 +18,7 @@ const signToken = (email) => {
 
 authFunctions.login = (req, res) => {
     try {
-        // req.body = JSON.parse(req.body.data);
+        req.body = JSON.parse(req.body.data);
         const { rut, password } = req.body;
 
         sql.connect(config)
@@ -38,7 +39,7 @@ authFunctions.login = (req, res) => {
                             token: token,
                             user: {
                                 email: cliente.email_cliente,
-                                name: cliente.nombre_Cliente,
+                                name: cliente.nombre_cliente,
                                 rut: cliente.rut_cliente,
                             },
                             msg: 'Exito al ingresar',

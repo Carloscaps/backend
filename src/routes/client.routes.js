@@ -7,7 +7,7 @@ const router = Router();
 router.get('/', clientFunctions.getClients);
 
 // POST
-router.post('/newCliente', clientFunctions.insertCliente);
+router.post('/newClient', clientFunctions.insertCliente);
 
 router.all('*', (req,res)=> {
     res.status(404).json({

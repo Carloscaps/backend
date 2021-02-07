@@ -31,12 +31,16 @@ clientFunctions.getClients = (req, res) => {
 
 clientFunctions.insertCliente = (req, res) => {
     try {
-        // req.body = JSON.parse(req.body.data);
+        req.body = JSON.parse(req.body.data);
         const { nombre, razonSocial, rut, direccion, ciudad, telefono, email, tipo, password } = req.body;
 
         sql.connect(config)
             .then(pool => {
                 crypto.randomBytes(16, (err, salt) => {
+                    if (err) {
+                        throw new Error('Error al encryptar la contraseña');
+                    }
+
                     const newSalt = salt.toString('base64');
                     crypto.pbkdf2(password, newSalt, 1000, 64, 'sha1', (err, key) => {
                         const encryptPassword = key.toString('base64');
