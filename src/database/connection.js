@@ -1,12 +1,13 @@
 export const config = {
-    user: 'sa',
-    password: 'sqlserver2014',
-    server: 'localhost',
-    database: 'Wilug',
+    user: 'dbtest',
+    password: 'Wilug21#',
+    server: 'wcorpd.wilug.cl',
+    database: 'WilugCorpD_Test',
     options: {
         trustedconnection: true,
         enableArithAbort: true,
-        instancename: 'SQLEXPRESS'
+        encrypt:false 
+        // instancename: 'SQLEXPRESS'
     },
-    port: 51688
+    port: 1433
 };
