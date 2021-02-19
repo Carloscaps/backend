@@ -32,7 +32,7 @@ clientFunctions.getClients = (req, res) => {
 clientFunctions.insertCliente = (req, res) => {
     try {
         req.body = JSON.parse(req.body.data);
-        const { nombre, razonSocial, rut, direccion, ciudad, telefono, email, tipo, password } = req.body;
+        const { nombre, razonSocial, nombreContacto, rut, direccion, direccionFactura, giro, ciudad, telefono, secondTelefono, email, tipo, password, comuna } = req.body;
 
         sql.connect(config)
             .then(pool => {
@@ -55,9 +55,14 @@ clientFunctions.insertCliente = (req, res) => {
                             .input('tipo', tipo)
                             .input('password', encryptPassword)
                             .input('salt', newSalt)
+                            .input('contacto', nombreContacto)
+                            .input('factura', direccionFactura)
+                            .input('giro', giro)
+                            .input('telefonoDos', secondTelefono)
+                            .input('comuna', comuna)
                             .query(`INSERT INTO cliente 
-                            (nombre_cliente, rsocial_cliente, rut_cliente, password_hash, password_salt, direccion_cliente,ciudad,telefono,email_cliente,tipo_cliente)
-                            VALUES (@nombre, @razon, @rut, @password, @salt, @direccion, @ciudad, @telefono, @email, @tipo)`);
+                            (rsocial_cliente,nombre_cliente, nombre_contacto, rut_cliente, password_hash, password_salt, direccion_trabajo, direccion_factura, giro, ciudad, telefono, telefono_dos, email_cliente, tipo_cliente, comuna_id)
+                            VALUES (@nombre, @razon, @contacto, @rut, @password, @salt, @direccion, @factura, @giro, @ciudad, @telefono, @telefonoDos, @email, @tipo, @comuna)`);
                     });
                 });
             })
