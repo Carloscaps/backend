@@ -37,11 +37,7 @@ authFunctions.login = (req, res) => {
                         const token = signToken(cliente.email_cliente);
                         return res.status(200).json({
                             token: token,
-                            user: {
-                                email: cliente.email_cliente,
-                                name: cliente.nombre_cliente,
-                                rut: cliente.rut_cliente,
-                            },
+                            user: cliente,
                             msg: 'Exito al ingresar',
                         });
                     }

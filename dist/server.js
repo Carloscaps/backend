@@ -12,6 +12,10 @@ var _client = _interopRequireDefault(require("./routes/client.routes"));
 
 var _auth = _interopRequireDefault(require("./routes/auth.routes"));
 
+var _country = _interopRequireDefault(require("./routes/country.routes"));
+
+var _products = _interopRequireDefault(require("./routes/products.routes"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var app = (0, _express["default"])(); // port configuration
@@ -26,6 +30,8 @@ app.use(_bodyParser["default"].urlencoded({
 
 app.use('/api/clients', _client["default"]);
 app.use('/api/auth', _auth["default"]);
+app.use('/api/country', _country["default"]);
+app.use('/api/products', _products["default"]);
 app.get('/', function (req, res) {
   res.send('Backend Wilug');
 }); // app execute

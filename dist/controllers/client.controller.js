@@ -71,8 +71,8 @@ clientFunctions.insertCliente = function (req, res) {
         });
       });
     }).then(function () {
-      return res.status(200).json({
-        msg: 'cliente registrado exitosamente'
+      return res.status(201).json({
+        msg: 'Cliente registrado exitosamente'
       });
     })["catch"](function (error) {
       return res.status(400).json({
