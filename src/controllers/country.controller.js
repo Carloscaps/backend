@@ -8,7 +8,7 @@ countryFunctions.getRegions = (req, res) => {
         sql.connect(config)
             .then(pool => {
                 return pool.request()
-                    .query('SELECT * FROM region')
+                    .query('SELECT region_id as value, nombre_region as label FROM region')
             })
             .then(result => {
                 const { recordsets: regions } = result;
@@ -40,7 +40,7 @@ countryFunctions.communesByRegion = (req, res) => {
             .then(pool => {
                 return pool.request()
                     .input('region', id)
-                    .query(`SELECT c.comuna_id, c.nombre_comuna 
+                    .query(`SELECT c.comuna_id as value, c.nombre_comuna as label, c.region_id 
                             FROM comuna c
                             WHERE c.region_id = @region`)
             })
