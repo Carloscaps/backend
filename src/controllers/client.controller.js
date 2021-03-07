@@ -85,4 +85,53 @@ clientFunctions.insertCliente = (req, res) => {
     }
 };
 
+
+clientFunctions.updateCliente = (req, res) => {
+    try {
+        req.body = JSON.parse(req.body.data);
+        const id = req.params.id;
+
+        const { telefono, direccion_factura, email_cliente, password } = req.body;
+
+        sql.connect(config)
+            .then(pool => {
+                crypto.randomBytes(16, (err, salt) => {
+                    if (err) {
+                        throw new Error('Error al encryptar la contraseña');
+                    }
+
+                    const newSalt = salt.toString('base64');
+                    crypto.pbkdf2(password, newSalt, 1000, 64, 'sha1', (err, key) => {
+                        const encryptPassword = key.toString('base64');
+                        return pool.request()
+                            .input('email', email_cliente)
+                            .input('telefono', telefono)
+                            .input('pass', encryptPassword)
+                            .input('hash', newSalt)
+                            .input('direccion', direccion_factura)
+                            .input('id', id)
+                            .query(`UPDATE cliente SET telefono = @telefono, direccion_factura = @direccion, email_cliente = @email, password_hash = @pass, password_salt = @hash 
+                                    WHERE cliente_id = @id`);
+                    });
+                });
+            })
+            .then(() => {
+                return res.status(201).json({
+                    msg: 'Cliente actualizado exitosamente'
+                });
+            })
+            .catch(error => {
+                return res.status(400).json({
+                    msg: 'error al actualizar un nuevo cliente',
+                    error
+                });
+            })
+    } catch (error) {
+        return res.status(500).json({
+            msg: 'error en el servidor',
+            error
+        });
+    }
+};
+
 export default clientFunctions;
