@@ -7,12 +7,12 @@ servicesFunctions.getHistoryByClient = (req, res) => {
     try {
 
         const { id } = req.params;
-        
+
         sql.connect(config)
             .then(pool => {
                 return pool.request()
                     .input('id', id)
-                    .query(`select s.comentario, sc.fecha_mantencion, sc.fecha_mantencion_realizada
+                    .query(`select s.comentario as nombre, sc.fecha_mantencion as solicitud, sc.fecha_mantencion_realizada as realizada
                             from servicioCliente sc inner join servicio s ON sc.servicio_id = s.servicio_id
                             where cliente_id = @id`)
             })
@@ -22,14 +22,17 @@ servicesFunctions.getHistoryByClient = (req, res) => {
                     .then(pool => {
                         return pool.request()
                             .input('idm', id)
-                            .query(`select s.comentario, sc.fecha_mantencion, sc.fecha_mantencion_realizada
-                                from servicioCliente sc inner join servicio s ON sc.servicio_id = s.servicio_id
-                                where cliente_id = @idm`)
+                            .query(`select m.servicio as nombre, ms.fecha_solicitada as solicitud, ms.fecha_hecha as realizada
+                                    from mantencionEstado ms inner join mantencion m On ms.mantencion_id = m.mantencion_id
+                                        inner join productoCliente pc on pc.producto_id = m.producto_id
+                                    where pc.cliente_id = @idm`)
                     })
                     .then(result => {
                         const { recordsets: mantenciones } = result;
 
-                        return res.status(200).json({servicios: servicios[0], mantenciones: mantenciones[0]});
+                        const response = servicios[0].concat(mantenciones[0]);
+                        
+                        return res.status(200).json(response);
                     })
                     .catch(error => {
                         return res.status(400).json({
