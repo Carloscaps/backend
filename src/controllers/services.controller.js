@@ -58,7 +58,7 @@ servicesFunctions.getHistoryByClient = (req, res) => {
 
 servicesFunctions.sendMail = (req, res) => {
     try {
-        //req.body = JSON.parse(req.body.data);
+        req.body = JSON.parse(req.body.data);
         const { to } = req.body;
         sendMail(to)
             .then(() => {
@@ -71,7 +71,6 @@ servicesFunctions.sendMail = (req, res) => {
                 });
             })
     } catch (error) {
-        console.log(error)
         return res.status(500).json({
             message: 'Error en el servidor',
             error
