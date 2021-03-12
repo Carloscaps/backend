@@ -1,4 +1,3 @@
-import { reject } from 'async';
 import nodemailer from 'nodemailer';
 
 export const sendMail = (to) => {
