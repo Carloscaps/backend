@@ -3,7 +3,9 @@ import servicesFunctions from '../controllers/services.controller';
 
 const router = Router();
 
-router.get('/history/:id', servicesFunctions.getHistoryByClient)
+router.get('/history/:id', servicesFunctions.getHistoryByClient);
+
+router.post('/sendMail', servicesFunctions.sendMail);
 
 router.all('*', (req,res)=> {
     res.status(404).json({

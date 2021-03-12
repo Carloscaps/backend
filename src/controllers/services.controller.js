@@ -1,5 +1,6 @@
 import sql from 'mssql';
 import { config } from '../database/connection';
+import { sendMail } from '../middleware/mailer';
 
 let servicesFunctions = {};
 
@@ -31,19 +32,19 @@ servicesFunctions.getHistoryByClient = (req, res) => {
                         const { recordsets: mantenciones } = result;
 
                         const response = servicios[0].concat(mantenciones[0]);
-                        
+
                         return res.status(200).json(response);
                     })
                     .catch(error => {
                         return res.status(400).json({
-                            msg: 'error al obtener los clientes',
+                            msg: 'error al obtener los datos',
                             error
                         });
                     })
             })
             .catch(error => {
                 return res.status(400).json({
-                    msg: 'error al obtener los clientes',
+                    msg: 'error al obtener los datos',
                     error
                 });
             })
@@ -53,6 +54,29 @@ servicesFunctions.getHistoryByClient = (req, res) => {
             error
         });
     };
+};
+
+servicesFunctions.sendMail = (req, res) => {
+    try {
+        req.body = JSON.parse(req.body.data);
+        const { to } = req.body;
+        sendMail(to)
+            .then(() => {
+                return res.status(200).json({ msg: 'Solicitud enviada exitosamente' });
+            })
+            .catch(err => {
+                return res.status(400).json({
+                    msg: 'error al enviar la solicitud',
+                    err
+                });
+            })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            message: 'Error en el servidor',
+            error
+        });
+    }
 };
 
 export default servicesFunctions;
