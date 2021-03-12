@@ -11,7 +11,7 @@ productsFunctions.getProductsByClient = (req, res) => {
             .then(pool => {
                 return pool.request()
                     .input('cliente', id)
-                    .query(`select t.nom_agente,p.cap_extagente,DATEDIFF (DAY, SYSDATETIME() , DATEADD(year, 1, p.fecha_utlMant)) as dias
+                    .query(`select p.producto_id, t.nom_agente,p.cap_extagente,DATEDIFF (DAY, SYSDATETIME() , DATEADD(year, 1, p.fecha_utlMant)) as dias
                             from producto p inner join tipo t on p.tipo_id = t.tipo_id
                             inner join productoCliente pc on pc.producto_id = p.producto_id
                             WHERE pc.cliente_id = @cliente`)
@@ -20,7 +20,8 @@ productsFunctions.getProductsByClient = (req, res) => {
                 const { recordsets: products } = result;
                 const data = products[0].map(value => {
                     return {
-                        name: `extintor: ${value.nom_agente}, ${value.cap_extagente}kg, dias sgte mantención: ${value.dias}`
+                        name: `extintor: ${value.nom_agente}, ${value.cap_extagente}kg, dias sgte mantención: ${value.dias}`,
+                        id: value.producto_id
                     }
                 })
                 return res.status(200).json(data);
