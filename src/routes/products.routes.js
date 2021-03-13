@@ -6,6 +6,7 @@ const router = Router();
 // GET
 router.get('/ByCliente/:id', productsFunctions.getProductsByClient);
 router.get('/agents', productsFunctions.getAgents);
+router.get('/detail/:id', productsFunctions.detailProduct);
 
 router.post('/', productsFunctions.newProduct);
 

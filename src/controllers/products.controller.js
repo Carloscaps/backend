@@ -94,7 +94,7 @@ productsFunctions.newProduct = (req, res) => {
                             .input('cliente', idCliente)
                             .query(`INSERT INTO productoCliente (producto_id, cliente_id) VALUES (@producto, @cliente)`)
                     })
-                    .then(() => {                        
+                    .then(() => {
                         return res.status(201).json({
                             msg: 'Producto registrado exitosamente'
                         });
@@ -119,6 +119,35 @@ productsFunctions.newProduct = (req, res) => {
             error
         });
     }
+};
+
+productsFunctions.detailProduct = (req, res) => {
+    try {
+        const { id } = req.params;
+        sql.connect(config)
+            .then(pool => {
+                return pool.request()
+                    .input('id', id)
+                    .query(`select p.num_cert, t.nom_agente, p.cap_extagente, p.fecha_fabricacion, p.fecha_ultcarga, p.fecha_vencarga, p.fecha_utlMant 
+                            from producto P inner join tipo t on p.tipo_id = t.tipo_id
+                            where p.producto_id = @id`)
+            })
+            .then(result => {
+                const { recordsets: producto } = result;
+                return res.status(200).json(producto[0]);
+            })
+            .catch(error => {
+                return res.status(400).json({
+                    msg: 'error al obtener los detalles del producto',
+                    error
+                });
+            })
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Error en el servidor',
+            error
+        });
+    };
 };
 
 export default productsFunctions;
