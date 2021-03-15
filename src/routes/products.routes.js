@@ -4,7 +4,7 @@ import productsFunctions from '../controllers/products.controller';
 const router = Router();
 
 // GET
-router.get('/ByCliente/:id', productsFunctions.getProductsByClient);
+router.get('/ByCliente/:id/:view', productsFunctions.getProductsByClient);
 router.get('/agents', productsFunctions.getAgents);
 router.get('/detail/:id', productsFunctions.detailProduct);
 

@@ -5,7 +5,7 @@ let productsFunctions = {};
 
 productsFunctions.getProductsByClient = (req, res) => {
     try {
-        const { id } = req.params;
+        const { id, view } = req.params;
 
         sql.connect(config)
             .then(pool => {
@@ -19,9 +19,16 @@ productsFunctions.getProductsByClient = (req, res) => {
             .then(result => {
                 const { recordsets: products } = result;
                 const data = products[0].map(value => {
-                    return {
-                        name: `extintor: ${value.nom_agente}, ${value.cap_extagente}kg, dias sgte mantención: ${value.dias}`,
-                        id: value.producto_id
+                    if (view == 'mantencion'){
+                        return {
+                            name: `extintor: ${value.nom_agente}, ${value.cap_extagente}kg`,
+                            id: value.producto_id
+                        }
+                    } else {
+                        return {
+                            name: `extintor: ${value.nom_agente}, ${value.cap_extagente}kg, dias sgte mantención: ${value.dias}`,
+                            id: value.producto_id
+                        }
                     }
                 })
                 return res.status(200).json(data);
