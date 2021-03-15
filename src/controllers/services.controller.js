@@ -82,14 +82,13 @@ servicesFunctions.saveMantencion = (req, res) => {
     try {
         req.body = JSON.parse(req.body.data);
         const { selectedFruits } = req.body;
-        console.log(selectedFruits)
         let valid = true;
 
         selectedFruits.map(value => {
             sql.connect(config)
                 .then(pool => {
                     return pool.request()
-                        .input('servicio', 'mantencion')
+                        .input('servicio', 'Mantencion')
                         .input('producto', value.value)
                         .query(`INSERT INTO mantencion (servicio, producto_id)
                                 OUTPUT INSERTED.mantencion_id
@@ -97,12 +96,13 @@ servicesFunctions.saveMantencion = (req, res) => {
                 })
                 .then((data) => {
                     const { mantencion_id } = data.recordset[0];
+                    console.log(mantencion_id)
                     sql.connect(config)
                         .then(pool => {
                             return pool.request()
                                 .input('mantencion', mantencion_id)
                                 .input('estado', '80C52D48-3FC7-4E9E-873A-984A004FF5C1')
-                                .query(`INSERT INTO mantencionEstado (mantencion_id, estado_id, fecha_solciitada) VALUES (@producto, @estado, SYSDATETIME())`)
+                                .query(`INSERT INTO mantencionEstado (mantencion_id, estado_id, fecha_hecha, fecha_solicitada) VALUES (@mantencion, @estado, NULL,SYSDATETIME())`)
                         })
                         .catch(() => {
                             valid = false;
