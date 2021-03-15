@@ -19,7 +19,7 @@ productsFunctions.getProductsByClient = (req, res) => {
             .then(result => {
                 const { recordsets: products } = result;
                 const data = products[0].map(value => {
-                    if (view == 'mantencion'){
+                    if (view == 'mantencion') {
                         return {
                             name: `extintor: ${value.nom_agente}, ${value.cap_extagente}kg`,
                             id: value.producto_id

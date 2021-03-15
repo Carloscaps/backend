@@ -78,4 +78,52 @@ servicesFunctions.sendMail = (req, res) => {
     }
 };
 
+servicesFunctions.saveMantencion = (req, res) => {
+    try {
+        req.body = JSON.parse(req.body.data);
+        const { selectedFruits } = req.body;
+        console.log(selectedFruits)
+        let valid = true;
+
+        selectedFruits.map(value => {
+            sql.connect(config)
+                .then(pool => {
+                    return pool.request()
+                        .input('servicio', 'mantencion')
+                        .input('producto', value.value)
+                        .query(`INSERT INTO mantencion (servicio, producto_id)
+                                OUTPUT INSERTED.mantencion_id
+                                VALUES (@servicio, @producto)`)
+                })
+                .then((data) => {
+                    const { mantencion_id } = data.recordset[0];
+                    sql.connect(config)
+                        .then(pool => {
+                            return pool.request()
+                                .input('mantencion', mantencion_id)
+                                .input('estado', '80C52D48-3FC7-4E9E-873A-984A004FF5C1')
+                                .query(`INSERT INTO mantencionEstado (mantencion_id, estado_id, fecha_solciitada) VALUES (@producto, @estado, SYSDATETIME())`)
+                        })
+                        .catch(() => {
+                            valid = false;
+                        })
+                })
+                .catch(() => {
+                    valid = false;
+                })
+        });
+
+        if (valid) {
+            return res.status(200).json({ msg: 'Mantenciones enviadas exitosamente' });
+        } else {
+            return res.status(400).json({ msg: 'error al enviar las mantenciones' });
+        }
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Error en el servidor',
+            error
+        });
+    }
+};
+
 export default servicesFunctions;

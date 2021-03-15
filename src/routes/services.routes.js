@@ -6,6 +6,7 @@ const router = Router();
 router.get('/history/:id', servicesFunctions.getHistoryByClient);
 
 router.post('/sendMail', servicesFunctions.sendMail);
+router.post('/saveMantencion', servicesFunctions.saveMantencion);
 
 router.all('*', (req,res)=> {
     res.status(404).json({
