@@ -76,7 +76,7 @@ productsFunctions.getAgents = (req, res) => {
 
 productsFunctions.newProduct = (req, res) => {
     try {
-        req.body = JSON.parse(req.body.data);
+        //req.body = JSON.parse(req.body.data);
         const { tipo, capacidad, fechaFabricacion, fechaUltCarga, fechaUltMantencion, idCliente } = req.body;
 
         sql.connect(config)
@@ -92,10 +92,11 @@ productsFunctions.newProduct = (req, res) => {
                     .input('tipo', tipo)
                     .query(`INSERT INTO producto (cap_extagente, estadoProducto, fecha_utlMant, venc_mant, fecha_ultcarga, fecha_vencarga, fecha_fabricacion, tipo_id)
                         OUTPUT INSERTED.producto_id
-                        VALUES (@capacidad, @estado, @fechaUltMant,  DATEADD(year, 1, @vencMant), @fechaUltCarga, DATEADD(year, 5, @fechaUltCarga), @fechaFabri, @tipo)`)
+                        VALUES (@capacidad, @estado, CAST(@fechaUltMant as date),  DATEADD(year, 1, CAST(@vencMant as date)), CAST(@fechaUltCarga as date), DATEADD(year, 5, CAST(@fechaUltCarga as date)), CAST(@fechaFabri as date), @tipo)`)
             })
             .then((data) => {
                 const { producto_id } = data.recordset[0];
+                console.log(producto_id)
                 sql.connect(config)
                     .then(pool => {
                         return pool.request()
