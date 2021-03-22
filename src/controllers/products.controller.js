@@ -76,7 +76,7 @@ productsFunctions.getAgents = (req, res) => {
 
 productsFunctions.newProduct = (req, res) => {
     try {
-        //req.body = JSON.parse(req.body.data);
+        req.body = JSON.parse(req.body.data);
         const { tipo, capacidad, fechaFabricacion, fechaUltCarga, fechaUltMantencion, idCliente } = req.body;
 
         sql.connect(config)
