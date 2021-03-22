@@ -28,7 +28,8 @@ productsFunctions.getProductsByClient = (req, res) => {
                     } else {
                         return {
                             name: `extintor: ${value.nom_agente}, ${value.cap_extagente}kg, dias sgte mantención: ${value.dias}`,
-                            id: value.producto_id
+                            id: value.producto_id,
+                            dias: value.dias
                         }
                     }
                 })
