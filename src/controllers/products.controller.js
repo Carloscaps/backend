@@ -53,7 +53,7 @@ productsFunctions.getAgents = (req, res) => {
         sql.connect(config)
             .then(pool => {
                 return pool.request()
-                    .query(`SELECT * FROM tipo`)
+                    .query(`SELECT tipo_id as value, nom_agente as label FROM tipo`)
             })
             .then(result => {
                 const { recordsets: tipos } = result;
