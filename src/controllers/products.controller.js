@@ -91,7 +91,7 @@ productsFunctions.newProduct = (req, res) => {
                     .input('tipo', tipo)
                     .query(`INSERT INTO producto (cap_extagente, estadoProducto, fecha_utlMant, venc_mant, fecha_ultcarga, fecha_vencarga, fecha_fabricacion, tipo_id)
                         OUTPUT INSERTED.producto_id
-                        VALUES (@capacidad, @estado, @fechaUltMant,  DATEADD(year, 5, @vencMant), DATEADD(year, 1, @fechaUltCarga), @vencCarga, @fechaFabri, @tipo)`)
+                        VALUES (@capacidad, @estado, @fechaUltMant,  DATEADD(year, 1, @vencMant), @fechaUltCarga, DATEADD(year, 5, @fechaUltCarga), @fechaFabri, @tipo)`)
             })
             .then((data) => {
                 const { producto_id } = data.recordset[0];
