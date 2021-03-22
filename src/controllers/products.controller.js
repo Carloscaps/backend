@@ -14,7 +14,8 @@ productsFunctions.getProductsByClient = (req, res) => {
                     .query(`select p.producto_id, t.nom_agente,p.cap_extagente,DATEDIFF (DAY, SYSDATETIME() , DATEADD(year, 1, p.fecha_utlMant)) as dias
                             from producto p inner join tipo t on p.tipo_id = t.tipo_id
                             inner join productoCliente pc on pc.producto_id = p.producto_id
-                            WHERE pc.cliente_id = @cliente`)
+                            WHERE pc.cliente_id = @cliente
+                            ORDER BY DATEDIFF (DAY, SYSDATETIME() , DATEADD(year, 1, p.fecha_utlMant)) ASC`)
             })
             .then(result => {
                 const { recordsets: products } = result;
@@ -90,7 +91,7 @@ productsFunctions.newProduct = (req, res) => {
                     .input('tipo', tipo)
                     .query(`INSERT INTO producto (cap_extagente, estadoProducto, fecha_utlMant, venc_mant, fecha_ultcarga, fecha_vencarga, fecha_fabricacion, tipo_id)
                         OUTPUT INSERTED.producto_id
-                        VALUES (@capacidad, @estado, @fechaUltMant,  DATEADD(year, 1, @vencMant), DATEADD(year, 5, @fechaUltCarga), @vencCarga, @fechaFabri, @tipo)`)
+                        VALUES (@capacidad, @estado, @fechaUltMant,  DATEADD(year, 5, @vencMant), DATEADD(year, 1, @fechaUltCarga), @vencCarga, @fechaFabri, @tipo)`)
             })
             .then((data) => {
                 const { producto_id } = data.recordset[0];

@@ -1,6 +1,6 @@
 import sql from 'mssql';
 import { config } from '../database/connection';
-import { sendMail } from '../middleware/mailer';
+import { sendMail, sendMailWilug, sendMailContactenos } from '../middleware/mailer';
 
 let servicesFunctions = {};
 
@@ -60,7 +60,38 @@ servicesFunctions.sendMail = (req, res) => {
     try {
         req.body = JSON.parse(req.body.data);
         const { to } = req.body;
-        sendMail(to)
+        sendMailWilug(to)
+            .then(() => {
+                sendMail(to)
+                .then(() => {
+                    return res.status(200).json({ msg: 'Solicitud enviada exitosamente' });
+                })
+                .catch(err => {
+                    return res.status(400).json({
+                        msg: 'error al enviar la solicitud',
+                        err
+                    });
+                })
+            })
+            .catch(err => {
+                return res.status(400).json({
+                    msg: 'error al enviar la solicitud',
+                    err
+                });
+            })
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Error en el servidor',
+            error
+        });
+    }
+};
+
+servicesFunctions.sendMailContacto = (req, res) => {
+    try {
+        req.body = JSON.parse(req.body.data);
+        const { to, msg } = req.body;
+        sendMailContactenos(to, msg)
             .then(() => {
                 return res.status(200).json({ msg: 'Solicitud enviada exitosamente' });
             })

@@ -4,8 +4,9 @@ import authFunctions from '../controllers/auth.controller';
 const router = Router();
 
 router.post('/login', authFunctions.login);
+router.post('/recoverPassword', authFunctions.recoverPassword);
 
-router.all('*', (req,res)=> {
+router.all('*', (req,res) => {
     res.status(404).json({
         message:'La ruta solicitada no existe'
     });
