@@ -26,7 +26,10 @@ authFunctions.login = (req, res) => {
             .then(pool => {
                 return pool.request()
                     .input('id', rut)
-                    .query('SELECT * FROM cliente WHERE rut_cliente = @id')
+                    .query(`SELECT cliente.*, comuna.*   
+                            FROM cliente 
+                            inner join comuna on cliente.comuna_id = comuna.comuna_id 
+                            WHERE rut_cliente = @id`)
             })
             .then(result => {
                 const { recordset } = result;

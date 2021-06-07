@@ -1,6 +1,6 @@
 import sql from 'mssql';
 import { config } from '../database/connection';
-import { sendMail, sendMailWilug, sendMailContactenos } from '../middleware/mailer';
+import { sendMail, sendMailWilug, sendMailContactenos, sendMailFormulario } from '../middleware/mailer';
 
 let servicesFunctions = {};
 
@@ -90,8 +90,8 @@ servicesFunctions.sendMail = (req, res) => {
 servicesFunctions.sendMailContacto = (req, res) => {
     try {
         req.body = JSON.parse(req.body.data);
-        const { to, msg } = req.body;
-        sendMailContactenos(to, msg)
+        const { email_cliente, msg, comuna } = req.body;
+        sendMailContactenos(email_cliente, msg, comuna)
             .then(() => {
                 return res.status(200).json({ msg: 'Solicitud enviada exitosamente' });
             })
@@ -112,10 +112,10 @@ servicesFunctions.sendMailContacto = (req, res) => {
 servicesFunctions.saveMantencion = (req, res) => {
     try {
         req.body = JSON.parse(req.body.data);
-        const { selectedFruits } = req.body;
+        const { user, msg, selectData } = req.body;
         let valid = true;
-
-        selectedFruits.map(value => {
+        let id = "";
+        selectData.selectedFruits.map(value => {
             sql.connect(config)
                 .then(pool => {
                     return pool.request()
@@ -127,7 +127,7 @@ servicesFunctions.saveMantencion = (req, res) => {
                 })
                 .then((data) => {
                     const { mantencion_id } = data.recordset[0];
-                    console.log(mantencion_id)
+                    id = mantencion_id
                     sql.connect(config)
                         .then(pool => {
                             return pool.request()
@@ -145,7 +145,13 @@ servicesFunctions.saveMantencion = (req, res) => {
         });
 
         if (valid) {
-            return res.status(200).json({ msg: 'Mantenciones enviadas exitosamente' });
+            sendMailFormulario(user, id, selectData.selectedFruits)
+            .then(() => {
+                return res.status(200).json({ msg: 'Mantenciones enviadas exitosamente' });
+            })
+            .catch(() => {
+                return res.status(200).json({ msg: 'error al enviar el correo, pero se ingreso la mantencion' });
+            })
         } else {
             return res.status(400).json({ msg: 'error al enviar las mantenciones' });
         }
