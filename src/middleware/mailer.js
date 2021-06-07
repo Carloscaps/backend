@@ -111,3 +111,47 @@ export const sendMailContactenos = (to, msg) => {
             })
     })
 };
+
+export const sendMailFormulario = (to) => {
+    return new Promise((resolve, reject) => {
+        const emailSend = 'juanpmartinezromero@gmail.com';
+        const passEmail = 'lolowerty21';
+
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: emailSend,
+                pass: passEmail
+            }
+        });
+
+        transporter.sendMail({
+            from: emailSend,
+            to: emailSend,
+            subject: "Solicitud nueva mantencion ",
+            text: `Ha sido solicitada una mantención del cliente 
+
+            'Manuel Rodriguez
+            nombre contacto: Manuel Rodriguez
+            Rut:13.382.588-4
+            Teléfono: 947294752
+            Email: hola@asas
+            Ciudad: Coquimbo
+            Dirección: Los alelies 255
+            
+            MENSAJE
+
+            Productos
+
+            Extintor AC-K, 1 KG
+            Extintor: CARRO PQS, 6 Kg
+            Extintor: PQS ANSULI I-A-20-G, 100 KG' ${to}`,
+        })
+            .then(result => {
+                resolve(result);
+            })
+            .catch(err => {
+                reject(err)
+            })
+    })
+}
