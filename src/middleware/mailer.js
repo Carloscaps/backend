@@ -71,7 +71,7 @@ export const sendMailWilug = (to) => {
         transporter.sendMail({
             from: emailSend,
             to: emailSend,
-            subject: "Solicitud nueva",
+            subject: "Solicitud nuevo",
             text: `Acaba de llegar una nueva solicitud de parte del cliente: ${to}`,
         })
             .then(result => {
