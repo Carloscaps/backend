@@ -145,12 +145,12 @@ servicesFunctions.saveMantencion = (req, res) => {
         });
 
         if (valid) {
-            sendMailFormulario(user, id, selectData.selectedFruits)
+            sendMailFormulario(user, id, msg, selectData.selectedFruits)
             .then(() => {
                 return res.status(200).json({ msg: 'Mantenciones enviadas exitosamente' });
             })
             .catch(() => {
-                return res.status(200).json({ msg: 'error al enviar el correo, pero se ingreso la mantencion' });
+                return res.status(400).json({ msg: 'error al enviar el correo, pero se ingreso la mantencion' });
             })
         } else {
             return res.status(400).json({ msg: 'error al enviar las mantenciones' });
