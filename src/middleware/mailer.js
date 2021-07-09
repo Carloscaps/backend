@@ -45,7 +45,7 @@ export const sendMail = (to) => {
             from: emailSend,
             to: to,
             subject: "Solicitud Wilug",
-            text: "Estimando cliente su solicitud fue recibia con exito, nos comunicaremos con usted para más información, atte Wilug",
+            text: "Estimando cliente su solicitud fue recibia con exito, nos comunicaremos con usted para más información, atentamente Wilug",
         })
             .then(result => {
                 resolve(result);
