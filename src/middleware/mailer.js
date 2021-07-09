@@ -5,24 +5,24 @@ const emailByCity = (city) => {
     let password = "";
     switch (city) {
         case "Coquimbo" || "La Serena":
-            email = "juanpmartinezromero@gmail.com";
-            password = "lolowerty21";
+            email = "egarri@wilug.cl";
+            password = "";
             break;
         case "Copiapo":
-            email = "juanpmartinezromero@gmail.com";
-            password = "lolowerty21";
+            email = "mescobar@wilug.cl";
+            password = "";
             break;
         case "Santiago":
-            email = "juanpmartinezromero@gmail.com";
-            password = "lolowerty21";
+            email = "comercial@wilug.cl";
+            password = "";
             break;
         case "Calama":
-            email = "juanpmartinezromero@gmail.com";
-            password = "lolowerty21";
+            email = "calama@wilug.cl";
+            password = "";
             break;
         default:
-            email = "juanpmartinezromero@gmail.com";
-            password = "lolowerty21";
+            email = "egarri@wilug.cl";
+            password = "";
             break;
     }
 
@@ -31,8 +31,8 @@ const emailByCity = (city) => {
 
 export const sendMail = (to) => {
     return new Promise((resolve, reject) => {
-        const emailSend = 'juanpmartinezromero@gmail.com';
-        const passEmail = 'lolowerty21';
+        const emailSend = 'egarri@wilug.cl';
+        const passEmail = '';
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
@@ -45,7 +45,7 @@ export const sendMail = (to) => {
             from: emailSend,
             to: to,
             subject: "Solicitud Wilug",
-            text: "Estimando cliente su solicitud fue recibia con exito, nos comunicaremos con usted para más información, atte Wilug",
+            text: "Estimando cliente su solicitud fue recibia con exito, nos comunicaremos con usted para más información, atentamente Wilug",
         })
             .then(result => {
                 resolve(result);
@@ -58,8 +58,8 @@ export const sendMail = (to) => {
 
 export const sendMailWilug = (to) => {
     return new Promise((resolve, reject) => {
-        const emailSend = 'juanpmartinezromero@gmail.com';
-        const passEmail = 'lolowerty21';
+        const emailSend = '';
+        const passEmail = '';
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
@@ -85,8 +85,8 @@ export const sendMailWilug = (to) => {
 
 export const sendMailRecoverPassword = (to, password) => {
     return new Promise((resolve, reject) => {
-        const emailSend = 'juanpmartinezromero@gmail.com';
-        const passEmail = 'lolowerty21';
+        const emailSend = '';
+        const passEmail = '';
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
