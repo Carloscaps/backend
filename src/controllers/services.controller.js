@@ -58,7 +58,7 @@ servicesFunctions.getHistoryByClient = (req, res) => {
 
 servicesFunctions.sendMail = (req, res) => {
     try {
-        //req.body = JSON.parse(req.body.data);
+        req.body = JSON.parse(req.body.data);
         const { to } = req.body;
         sendMailWilug(to)
             .then(() => {
