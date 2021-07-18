@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer';
 
+
 const emailByCity = (city) => {
     let email = "";
     let password = "";
@@ -27,20 +28,27 @@ const emailByCity = (city) => {
     }
 
     return [email, password];
+};
+
+const getTransport = (comuna) => {
+
+    const [email, pass] = comuna ? emailByCity(comuna) : ['clm014@alumnos.ucn.cl', 'tolito14'];
+
+    const transport = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: email,
+            pass: pass,
+        }
+    });
+
+    return [transport, email];
 }
+
 
 export const sendMail = (to) => {
     return new Promise((resolve, reject) => {
-        const emailSend = 'egarri@wilug.cl';
-        const passEmail = '';
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: emailSend,
-                pass: passEmail
-            }
-        });
-
+        const [transporter, emailSend] = getTransport();
         transporter.sendMail({
             from: emailSend,
             to: to,
@@ -58,15 +66,7 @@ export const sendMail = (to) => {
 
 export const sendMailWilug = (to) => {
     return new Promise((resolve, reject) => {
-        const emailSend = '';
-        const passEmail = '';
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: emailSend,
-                pass: passEmail
-            }
-        });
+        const [transporter, emailSend] = getTransport();
 
         transporter.sendMail({
             from: emailSend,
@@ -85,15 +85,7 @@ export const sendMailWilug = (to) => {
 
 export const sendMailRecoverPassword = (to, password) => {
     return new Promise((resolve, reject) => {
-        const emailSend = '';
-        const passEmail = '';
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: emailSend,
-                pass: passEmail
-            }
-        });
+        const [transporter, emailSend] = getTransport();
 
         transporter.sendMail({
             from: emailSend,
@@ -112,15 +104,7 @@ export const sendMailRecoverPassword = (to, password) => {
 
 export const sendMailContactenos = (to, msg, comuna) => {
     return new Promise((resolve, reject) => {
-        const [email, password] = emailByCity(comuna);
-
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: email,
-                pass: password
-            }
-        });
+        const [transporter, email] = getTransport(comuna);
 
         transporter.sendMail({
             from: email,
@@ -139,15 +123,7 @@ export const sendMailContactenos = (to, msg, comuna) => {
 
 export const sendMailFormulario = (user, mantencion, msg, selectData) => {
     return new Promise((resolve, reject) => {
-        const [email, password] = emailByCity(user.nombre_comuna);
-
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: email,
-                pass: password
-            }
-        });
+        const [transporter, email] = getTransport(user.nombre_comuna);
 
         let text = `Ha sido solicitada una mantención del cliente 
 

@@ -58,7 +58,7 @@ servicesFunctions.getHistoryByClient = (req, res) => {
 
 servicesFunctions.sendMail = (req, res) => {
     try {
-        req.body = JSON.parse(req.body.data);
+        //req.body = JSON.parse(req.body.data);
         const { to } = req.body;
         sendMailWilug(to)
             .then(() => {
@@ -67,6 +67,7 @@ servicesFunctions.sendMail = (req, res) => {
                     return res.status(200).json({ msg: 'Solicitud enviada exitosamente' });
                 })
                 .catch(err => {
+                    console.log(err)
                     return res.status(400).json({
                         msg: 'error al enviar la solicitud',
                         err
@@ -74,6 +75,7 @@ servicesFunctions.sendMail = (req, res) => {
                 })
             })
             .catch(err => {
+                console.log(err)
                 return res.status(400).json({
                     msg: 'error al enviar la solicitud',
                     err
