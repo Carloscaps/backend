@@ -6,8 +6,8 @@ const emailByCity = (city) => {
     let password = "";
     switch (city) {
         case "Coquimbo" || "La Serena":
-            email = "egarri@wilug.cl";
-            password = "";
+            email = "clm014@alumnos.ucn.cl";
+            password = "tolito14";
             break;
         case "Copiapo":
             email = "mescobar@wilug.cl";
