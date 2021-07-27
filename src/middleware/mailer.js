@@ -123,7 +123,7 @@ export const sendMailContactenos = (to, msg, comuna) => {
 
 export const sendMailFormulario = (user, mantencion, msg, selectData) => {
     return new Promise((resolve, reject) => {
-        const [transporter, email] = getTransport(user.nombre_comuna);
+        const [transporter, email] = getTransport(comuna);
 
         let text = `Ha sido solicitada una mantención del cliente 
 
