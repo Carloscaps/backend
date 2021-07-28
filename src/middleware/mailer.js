@@ -146,7 +146,7 @@ export const sendMailFormulario = (user, mantencion, msg, selectData) => {
 
         transporter.sendMail({
             from: email,
-            to: user.email_cliente,
+            to: email,
             subject: `Solicitud nueva mantencion ${mantencion}`,
             text: text
 
