@@ -6,24 +6,24 @@ const emailByCity = (city) => {
     let password = "";
     switch (city) {
         case "Coquimbo" || "La Serena":
-            email = "clm014@alumnos.ucn.cl";
-            password = "";
+            email = "avrojas@wilug.cl";
+            password = "Totopipe11";
             break;
         case "Copiapo":
-            email = "mescobar@wilug.cl";
-            password = "";
+            email = "avrojas@wilug.cl";
+            password = "Totopipe11";
             break;
         case "Santiago":
-            email = "comercial@wilug.cl";
-            password = "";
+            email = "avrojas@wilug.cl";
+            password = "Totopipe11";
             break;
         case "Calama":
-            email = "calama@wilug.cl";
-            password = "";
+            email = "avrojas@wilug.cl";
+            password = "Totopipe11";
             break;
         default:
-            email = "egarri@wilug.cl";
-            password = "";
+            email = "avrojas@wilug.cl";
+            password = "Totopipe11";
             break;
     }
 
@@ -32,7 +32,7 @@ const emailByCity = (city) => {
 
 const getTransport = (comuna) => {
 
-    const [email, pass] = comuna ? emailByCity(comuna) : ['clm014@alumnos.ucn.cl', ''];
+    const [email, pass] = comuna ? emailByCity(comuna) : ['avrojas@wilug.cl', 'Totopipe11'];
 
     const transport = nodemailer.createTransport({
         service: 'gmail',
