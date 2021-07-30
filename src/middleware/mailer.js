@@ -89,7 +89,7 @@ export const sendMailRecoverPassword = (to, password) => {
 
         transporter.sendMail({
             from: emailSend,
-            to: to,
+            to: user.email_cliente,
             subject: "Recuperación de contraseña",
             text: `Estimando cliente su contraseña se ha restaurado con exito, su contraseña es la siguiente: ${password}, atte Wilug`,
         })
