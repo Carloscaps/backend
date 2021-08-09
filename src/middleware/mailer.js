@@ -4,22 +4,22 @@ import nodemailer from 'nodemailer';
 const emailByCity = (city) => {
     let email = "wilugcorp@wilug.cl";
     let password = "Miractiva0101#";
-    let email2 = "avrojas@wilug.cl";
+    let email2 = "ventas@wilug.cl";
     switch (city) {
         case "Coquimbo" || "La Serena":
-            email2 = "avrojas@wilug.cl";
+            email2 = "egarri@wilug.cl";
             break;
         case "Copiapo":
-            email2 = "avrojas@wilug.cl";
+            email2 = "comercial@wilug.cl";
             break;
         case "Santiago":
-            email2 = "avrojas@wilug.cl";
+            email2 = "comercial@wilug.cl";
             break;
         case "Calama":
-            email2 = "avrojas@wilug.cl";
+            email2 = "rgarri@wilug.cl";
             break;
         default:
-            email2 = "avrojas@wilug.cl";
+            email2 = "ventas@wilug.cl";
             break;
     }
 
@@ -28,7 +28,7 @@ const emailByCity = (city) => {
 
 const getTransport = (comuna) => {
 
-    const [email, pass, email2] = comuna ? emailByCity(comuna) : ['wilugcorp@wilug.cl', 'Miractiva0101#', 'avrojas@wilug.cl'];
+    const [email, pass, email2] = comuna ? emailByCity(comuna) : ['wilugcorp@wilug.cl', 'Miractiva0101#', 'ventas@wilug.cl'];
 
     const transport = nodemailer.createTransport({
         service: 'outlook',
@@ -66,7 +66,7 @@ export const sendMailWilug = (text, to, comuna) => {
 
         transporter.sendMail({
             from: email,
-            to: 'avrojas@wilug.cl',
+            to: 'ventas@wilug.cl',
             subject: "Solicitud nuevo",
             text: `Acaba de llegar una nueva solicitud de parte del cliente: ${to}, msg: ${text}`,
         })
