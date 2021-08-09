@@ -4,10 +4,12 @@ import nodemailer from 'nodemailer';
 const emailByCity = (city) => {
     let email = "";
     let password = "";
+    let email2 = "";
     switch (city) {
         case "Coquimbo" || "La Serena":
-            email = "avrojas@wilug.cl";
-            password = "Totopipe11";
+            email = "wilugcorp@wilug.cl";
+            password = "Miractiva0101#";
+            email2 = "avrojas@wilug.cl";
             break;
         case "Copiapo":
             email = "avrojas@wilug.cl";
@@ -32,7 +34,7 @@ const emailByCity = (city) => {
 
 const getTransport = (comuna) => {
 
-    const [email, pass] = comuna ? emailByCity(comuna) : ['avrojas@wilug.cl', 'Totopipe11'];
+    const [email, pass, email2] = comuna ? emailByCity(comuna) : ['avrojas@wilug.cl', 'Totopipe11'];
 
     const transport = nodemailer.createTransport({
         service: 'outlook',
@@ -42,7 +44,7 @@ const getTransport = (comuna) => {
         }
     });
 
-    return [transport, email];
+    return [transport, email, email2];
 }
 
 
@@ -123,7 +125,7 @@ export const sendMailContactenos = (to, msg, comuna) => {
 
 export const sendMailFormulario = (user, mantencion, msg, selectData) => {
     return new Promise((resolve, reject) => {
-        const [transporter, email] = getTransport(user.nombre_comuna);
+        const [transporter, email, email2] = getTransport(user.nombre_comuna);
 
         let text = `Ha sido solicitada una mantención del cliente 
 
@@ -146,7 +148,7 @@ export const sendMailFormulario = (user, mantencion, msg, selectData) => {
 
         transporter.sendMail({
             from: email,
-            to: email,
+            to: email2,
             subject: `Solicitud nueva mantencion ${mantencion}`,
             text: text
 
