@@ -5,10 +5,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.config = void 0;
 var config = {
-  user: 'dbtest',
-  password: 'Wilug21#',
+  user: 'dbwilug',
+  password: '',
   server: 'wcorpd.wilug.cl',
-  database: 'WilugCorpD_Test',
+  database: 'WilugCorpD',
   options: {
     trustedconnection: true,
     enableArithAbort: true,
