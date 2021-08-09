@@ -2,30 +2,23 @@ import nodemailer from 'nodemailer';
 
 
 const emailByCity = (city) => {
-    let email = "";
-    let password = "";
-    let email2 = "";
+    let email = "wilugcorp@wilug.cl";
+    let password = "Miractiva0101#";
+    let email2 = "avrojas@wilug.cl";
     switch (city) {
         case "Coquimbo" || "La Serena":
-            email = "wilugcorp@wilug.cl";
-            password = "Miractiva0101#";
             email2 = "avrojas@wilug.cl";
             break;
         case "Copiapo":
-            email = "avrojas@wilug.cl";
-            password = "Totopipe11";
+            email2 = "avrojas@wilug.cl";
             break;
         case "Santiago":
-            email = "avrojas@wilug.cl";
-            password = "Totopipe11";
+            email2 = "avrojas@wilug.cl";
             break;
         case "Calama":
-            email = "avrojas@wilug.cl";
-            password = "Totopipe11";
+            email2 = "avrojas@wilug.cl";
             break;
         default:
-            email = "wilugcorp@wilug.cl";
-            password = "Miractiva0101#";
             email2 = "avrojas@wilug.cl";
             break;
     }
@@ -35,7 +28,7 @@ const emailByCity = (city) => {
 
 const getTransport = (comuna) => {
 
-    const [email, pass, email2] = comuna ? emailByCity(comuna) : ['avrojas@wilug.cl', 'Totopipe11'];
+    const [email, pass, email2] = comuna ? emailByCity(comuna) : ['wilugcorp@wilug.cl', 'Miractiva0101#', 'avrojas@wilug.cl'];
 
     const transport = nodemailer.createTransport({
         service: 'outlook',
@@ -69,11 +62,11 @@ export const sendMail = (to) => {
 
 export const sendMailWilug = (text, to) => {
     return new Promise((resolve, reject) => {
-        const [transporter, email] = getTransport();
+        const [transporter, email, , email2] = getTransport();
 
         transporter.sendMail({
             from: email,
-            to: email,
+            to: email2,
             subject: "Solicitud nuevo",
             text: `Acaba de llegar una nueva solicitud de parte del cliente: ${to}, msg: ${text}`,
         })
