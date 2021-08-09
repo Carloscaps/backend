@@ -60,9 +60,9 @@ export const sendMail = (to) => {
     })
 };
 
-export const sendMailWilug = (text, to) => {
+export const sendMailWilug = (text, to, comuna) => {
     return new Promise((resolve, reject) => {
-        const [transporter, email, , email2] = getTransport('');
+        const [transporter, email, , email2] = getTransport(comuna);
 
         transporter.sendMail({
             from: email,
