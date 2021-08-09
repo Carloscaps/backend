@@ -67,7 +67,7 @@ export const sendMail = (to) => {
     })
 };
 
-export const sendMailWilug = (to) => {
+export const sendMailWilug = (text, to) => {
     return new Promise((resolve, reject) => {
         const [transporter, email, email2] = getTransport();
 
@@ -75,7 +75,7 @@ export const sendMailWilug = (to) => {
             from: email,
             to: email2,
             subject: "Solicitud nuevo",
-            text: `Acaba de llegar una nueva solicitud de parte del cliente: ${to}`,
+            text: `Acaba de llegar una nueva solicitud de parte del cliente: ${to}, msg: ${text}`,
         })
             .then(result => {
                 resolve(result);
