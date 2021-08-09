@@ -105,9 +105,9 @@ export const sendMailRecoverPassword = (to, password) => {
     })
 };
 
-export const sendMailContactenos = (to, msg, nombre_comuna) => {
+export const sendMailContactenos = (to, msg, comuna) => {
     return new Promise((resolve, reject) => {
-        const [transporter, email, email2] = getTransport(nombre_comuna);
+        const [transporter, email, email2] = getTransport(comuna);
 
         transporter.sendMail({
             from: email,

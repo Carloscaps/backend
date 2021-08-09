@@ -92,8 +92,8 @@ servicesFunctions.sendMail = (req, res) => {
 servicesFunctions.sendMailContacto = (req, res) => {
     try {
         req.body = JSON.parse(req.body.data);
-        const { email_cliente, msg, comuna } = req.body;
-        sendMailContactenos(email_cliente, msg, comuna)
+        const { email_cliente, msg, nombre_comuna } = req.body;
+        sendMailContactenos(email_cliente, msg, nombre_comuna)
             .then(() => {
                 return res.status(200).json({ msg: 'Solicitud enviada exitosamente' });
             })
