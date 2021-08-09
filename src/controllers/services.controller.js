@@ -60,9 +60,9 @@ servicesFunctions.sendMail = (req, res) => {
     try {
         req.body = JSON.parse(req.body.data);
         const { text, to } = req.body;
-        sendMailWilug(to)
+        sendMailWilug(text, to)
             .then(() => {
-                sendMail(text, to)
+                sendMail(to)
                 .then(() => {
                     return res.status(200).json({ msg: 'Solicitud enviada exitosamente' });
                 })
