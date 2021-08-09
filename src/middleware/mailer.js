@@ -69,11 +69,11 @@ export const sendMail = (to) => {
 
 export const sendMailWilug = (to) => {
     return new Promise((resolve, reject) => {
-        const [transporter, emailSend] = getTransport();
+        const [transporter, emailSend, email2] = getTransport();
 
         transporter.sendMail({
             from: emailSend,
-            to: emailSend,
+            to: email2,
             subject: "Solicitud nuevo",
             text: `Acaba de llegar una nueva solicitud de parte del cliente: ${to}`,
         })
@@ -107,11 +107,11 @@ export const sendMailRecoverPassword = (to, password) => {
 
 export const sendMailContactenos = (to, msg, comuna) => {
     return new Promise((resolve, reject) => {
-        const [transporter, email] = getTransport(comuna);
+        const [transporter, email, email2] = getTransport(comuna);
 
         transporter.sendMail({
             from: email,
-            to: to,
+            to: email2,
             subject: "Contactenos",
             text: `Se acaba de poner en contacto el cliente: ${to}, msg: ${msg}`,
         })
