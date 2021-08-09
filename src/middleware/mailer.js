@@ -24,12 +24,13 @@ const emailByCity = (city) => {
             password = "Totopipe11";
             break;
         default:
-            email = "avrojas@wilug.cl";
-            password = "Totopipe11";
+            email = "wilugcorp@wilug.cl";
+            password = "Miractiva0101#";
+            email2 = "avrojas@wilug.cl";
             break;
     }
 
-    return [email, password];
+    return [email, password, email2];
 };
 
 const getTransport = (comuna) => {
