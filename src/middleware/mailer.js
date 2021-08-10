@@ -28,7 +28,8 @@ const emailByCity = (city) => {
 
 const getTransport = (comuna) => {
 
-    const [email, pass, email2] = comuna ? emailByCity(comuna) : ['wilugcorp@wilug.cl', 'Miractiva0101#', 'ventas@wilug.cl'];
+    //const [email, pass, email2] = comuna ? emailByCity(comuna) : ['wilugcorp@wilug.cl', 'Miractiva0101#', 'ventas@wilug.cl'];
+    const [email, pass, email2] = emailByCity(comuna)
 
     const transport = nodemailer.createTransport({
         service: 'outlook',
